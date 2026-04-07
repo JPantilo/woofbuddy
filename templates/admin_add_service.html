@@ -1,0 +1,100 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Add Service{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Add Service</h1>
+        <a href="{% url 'admin_services' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Services
+        </a>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Add New Service</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Service Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="price" class="form-label">Price (₱)</label>
+                                <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="duration_minutes" class="form-label">Duration (minutes)</label>
+                                <input type="number" class="form-control" id="duration_minutes" name="duration_minutes" min="15" step="15" value="60" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check mt-4">
+                                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active" checked>
+                                    <label class="form-check-label" for="is_active">
+                                        Active
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Add Service
+                            </button>
+                            <a href="{% url 'admin_services' %}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Service Info</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="avatar bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px; font-size: 20px;">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">New Service</h6>
+                            <small class="text-muted">Add a grooming service</small>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <p><strong>Service Name:</strong> The name of your grooming service</p>
+                    <p><strong>Price:</strong> How much you charge for this service</p>
+                    <p><strong>Description:</strong> Detailed description of what's included</p>
+                    <p><strong>Duration:</strong> How long the service takes in minutes</p>
+                    <p><strong>Active:</strong> Whether this service is currently available</p>
+                    
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle"></i>
+                        <small>Tip: Be descriptive in your service description to help customers understand what they're getting.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

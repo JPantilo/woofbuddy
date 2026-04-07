@@ -1,0 +1,166 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Appointment History - Woof Buddy Admin{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="fas fa-history"></i> Appointment History</h1>
+        <div>
+            <a href="{% url 'admin_appointments' %}" class="btn btn-outline-secondary me-2">
+                <i class="fas fa-calendar-alt"></i> Active Appointments
+            </a>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+    
+    {% if appointments %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Customer</th>
+                    <th>Pet</th>
+                    <th>Service</th>
+                    <th>Status</th>
+                    <th>Payment</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.date|date:"M d, Y" }}</td>
+                    <td>{{ appointment.time }}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px; font-size: 14px;">
+                                {{ appointment.user.username|slice:":1"|upper }}
+                            </div>
+                            {{ appointment.user.username }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-sm bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px; font-size: 14px;">
+                                <i class="fas fa-paw"></i>
+                            </div>
+                            {{ appointment.pet.name }}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <strong>{{ appointment.service.name }}</strong>
+                            <br><small class="text-muted">₱{{ appointment.service.price }}</small>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge {% if appointment.status == 'completed' %}bg-success{% elif appointment.status == 'cancelled' %}bg-danger{% else %}bg-warning{% endif %}">
+                            {{ appointment.status|title }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if appointment.payment %}
+                            {% if appointment.payment.method == 'paypal' %}
+                                <span class="badge bg-primary">
+                                    <i class="fab fa-paypal"></i> PayPal
+                                </span>
+                            {% elif appointment.payment.method == 'cash' %}
+                                <span class="badge bg-success">
+                                    <i class="fas fa-money-bill-wave"></i> Cash
+                                </span>
+                            {% endif %}
+                            {% if appointment.payment.status == 'completed' %}
+                                <br><small class="text-success"><i class="fas fa-check-circle"></i> Paid</small>
+                            {% endif %}
+                        {% else %}
+                            <span class="badge bg-light text-dark">No payment</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="{% url 'admin_edit_appointment' appointment.id %}" class="btn btn-sm btn-primary" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            {% if appointment.payment and appointment.payment.method == 'cash' and appointment.payment.status == 'pending' %}
+                            <a href="{% url 'admin_complete_cash_payment' appointment.payment.id %}" class="btn btn-sm btn-warning" title="Mark as Paid">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Summary Statistics -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="text-primary">{{ appointments|length }}</h4>
+                    <p class="mb-0">Total Past Appointments</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="text-success">
+                        {% with completed_count=appointments|length %}{% for appointment in appointments %}{% if appointment.status == 'completed' %}{{ completed_count|add:"-1" }}{% endif %}{% endfor %}{% endwith %}
+                    </h4>
+                    <p class="mb-0">Completed Services</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="text-danger">
+                        {% with cancelled_count=appointments|length %}{% for appointment in appointments %}{% if appointment.status == 'cancelled' %}{{ cancelled_count|add:"-1" }}{% endif %}{% endfor %}{% endwith %}
+                    </h4>
+                    <p class="mb-0">Cancelled Services</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-history fa-3x text-muted mb-3"></i>
+        <h4 class="text-muted">No appointment history found</h4>
+        <p class="text-muted">No completed or cancelled appointments yet.</p>
+        <a href="{% url 'admin_appointments' %}" class="btn btn-primary mt-2">
+            <i class="fas fa-calendar-alt"></i> View Active Appointments
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.avatar-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+</style>
+{% endblock %}

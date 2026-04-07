@@ -1,0 +1,85 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Service Management{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Service Management</h1>
+        <div>
+            <a href="{% url 'admin_add_service' %}" class="btn btn-primary me-2">
+                <i class="fas fa-plus"></i> Add Service
+            </a>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Service Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-sm bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px; font-size: 14px;">
+                                <i class="fas fa-cut"></i>
+                            </div>
+                            <strong>{{ service.name }}</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-muted">{{ service.description|truncatewords:10 }}</span>
+                    </td>
+                    <td>
+                        <strong>₱{{ service.price }}</strong>
+                    </td>
+                    <td>
+                        {{ service.duration_minutes }} minutes
+                    </td>
+                    <td>
+                        <span class="badge {% if service.is_active %}bg-success{% else %}bg-danger{% endif %}">
+                            {% if service.is_active %}Active{% else %}Inactive{% endif %}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="{% url 'admin_edit_service' service.id %}" class="btn btn-sm btn-primary" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            {% if service.is_active %}
+                                <a href="{% url 'admin_deactivate_service' service.id %}" class="btn btn-sm btn-warning" title="Deactivate">
+                                    <i class="fas fa-pause"></i>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'admin_activate_service' service.id %}" class="btn btn-sm btn-success" title="Activate">
+                                    <i class="fas fa-play"></i>
+                                </a>
+                            {% endif %}
+                            <a href="{% url 'admin_delete_service' service.id %}" class="btn btn-sm btn-danger" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No services found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

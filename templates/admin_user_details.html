@@ -1,0 +1,148 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}User Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>User Details: {{ user.username }}</h1>
+        <div>
+            <a href="{% url 'admin_edit_user' user.id %}" class="btn btn-primary me-2">
+                <i class="fas fa-edit"></i> Edit User
+            </a>
+            <a href="{% url 'admin_users' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Users
+            </a>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">User Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px; font-size: 20px;">
+                            {{ user.username|slice:":1"|upper }}
+                        </div>
+                        <div>
+                            <h6 class="mb-0">{{ user.username }}</h6>
+                            <small class="text-muted">{{ user.email }}</small>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Phone:</strong> {{ user.phone_number|default:"-" }}</p>
+                    <p><strong>Address:</strong> {{ user.address|default:"-" }}</p>
+                    <p><strong>Active:</strong> 
+                        <span class="badge {% if user.is_active %}bg-success{% else %}bg-danger{% endif %}">
+                            {% if user.is_active %}Yes{% else %}No{% endif %}
+                        </span>
+                    </p>
+                    <p><strong>Joined:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-alt text-success"></i> User's Appointments
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appointment in appointments %}
+                                <tr>
+                                    <td>{{ appointment.date|date:"M d, Y" }}</td>
+                                    <td>{{ appointment.time }}</td>
+                                    <td>{{ appointment.service.name }}</td>
+                                    <td>
+                                        <span class="badge {% if appointment.status == 'completed' %}bg-success{% elif appointment.status == 'pending' %}bg-warning{% else %}bg-info{% endif %}">
+                                            {{ appointment.status|title }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="#" class="btn btn-sm btn-danger">Cancel</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No appointments found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-paw text-warning"></i> User's Pets
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Breed</th>
+                                    <th>Age</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pet in pets %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-sm bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px; font-size: 14px;">
+                                                <i class="fas fa-paw"></i>
+                                            </div>
+                                            {{ pet.name }}
+                                        </div>
+                                    </td>
+                                    <td>{{ pet.type }}</td>
+                                    <td>{{ pet.breed }}</td>
+                                    <td>{{ pet.age }}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No pets found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,430 @@
+/* Admin Panel Styles - Using base.css variables */
+
+/* Admin Header */
+.admin-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+    border-radius: 0 0 20px 20px;
+}
+
+.admin-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.admin-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Admin Navigation */
+.admin-nav {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(139, 90, 60, 0.08);
+}
+
+.admin-nav h3 {
+    color: var(--text-main);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.admin-nav-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.admin-nav-links a {
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: var(--primary);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.admin-nav-links a:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Stats Cards */
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(139, 90, 60, 0.08);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(139, 90, 60, 0.15);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Feature Cards */
+.feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    box-shadow: 0 4px 15px rgba(139, 90, 60, 0.08);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(139, 90, 60, 0.15);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.feature-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+}
+
+.feature-description {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Recent Activity */
+.recent-activity {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(139, 90, 60, 0.08);
+}
+
+.recent-activity h3 {
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.activity-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 0.25rem;
+}
+
+.activity-time {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Admin Badges */
+.admin-badge {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.admin-badge.success {
+    background: var(--success);
+}
+
+.admin-badge.warning {
+    background: var(--warning);
+}
+
+.admin-badge.danger {
+    background: var(--danger);
+}
+
+/* Controls */
+.admin-controls {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(139, 90, 60, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.date-filter {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: var(--primary);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-badge.pending {
+    background: var(--warning);
+    color: white;
+}
+
+.status-badge.confirmed, .status-badge.completed {
+    background: var(--success);
+    color: white;
+}
+
+.status-badge.cancelled, .status-badge.failed {
+    background: var(--danger);
+    color: white;
+}
+
+.status-badge.refunded {
+    background: var(--text-muted);
+    color: white;
+}
+
+/* Cards */
+.appointment-card, .payment-card, .user-table {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(139, 90, 60, 0.08);
+    transition: all 0.3s ease;
+}
+
+.appointment-card:hover, .payment-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 90, 60, 0.15);
+}
+
+/* Tables */
+.user-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th {
+    background: var(--accent);
+    color: var(--text-main);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.user-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--accent);
+    color: var(--text-main);
+}
+
+.user-table tr:hover {
+    background: var(--bg-color);
+}
+
+/* User Info */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.user-details h4 {
+    margin: 0 0 0.25rem 0;
+    color: var(--text-main);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.user-details p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    padding: 0.5rem;
+    background: var(--accent);
+    color: var(--primary);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+}
+
+.action-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.action-btn.danger:hover {
+    background: var(--danger);
+    color: white;
+}
+
+/* Charts */
+.revenue-chart, .payment-methods {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(139, 90, 60, 0.08);
+}
+
+.revenue-chart h3, .payment-methods h3 {
+    color: var(--text-main);
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+/* Layout */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-header h1 {
+        font-size: 2rem;
+    }
+    
+    .admin-nav-links {
+        justify-content: center;
+    }
+    
+    .admin-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .date-filter {
+        justify-content: center;
+    }
+    
+    .filter-buttons {
+        justify-content: center;
+    }
+}

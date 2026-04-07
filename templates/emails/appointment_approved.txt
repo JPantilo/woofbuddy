@@ -1,0 +1,30 @@
+Appointment Approved - Woof Buddy Pet Grooming
+
+Dear {{ user.username }},
+
+Great news! Your appointment has been approved by our staff. We look forward to seeing you and {{ pet.name }}!
+
+YOUR APPROVED APPOINTMENT
+========================
+Pet: {{ pet.name }} ({{ pet.animal_type }})
+Service: {{ service.name }}
+Date: {{ appointment.date|date:"l, F d, Y" }}
+Time: {{ appointment.time }}
+Price: ₱{{ service.price }}
+Status: {{ appointment.status|title }}
+
+IMPORTANT INFORMATION:
+====================
+- Please arrive 10 minutes before your scheduled time
+- Bring your pet's vaccination records if available
+- Make sure your pet is on a leash or in a carrier
+- If you need to cancel, please contact us at least 24 hours in advance
+
+We're excited to provide the best grooming experience for {{ pet.name }}!
+
+View your dashboard: http://127.0.0.1:8000/dashboard/
+
+Woof Buddy Pet Grooming
+123 Pet Care Street, City Center
+Phone: (123) 456-7890
+Email: info@woofbuddy.com

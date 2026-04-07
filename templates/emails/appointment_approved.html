@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Approved</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: #28a745;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .content {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+        }
+        .appointment-details {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+        .detail-row {
+            margin: 10px 0;
+        }
+        .label {
+            font-weight: bold;
+            color: #666;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 12px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .success-icon {
+            font-size: 48px;
+            color: #28a745;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🐾 Woof Buddy Pet Grooming</h1>
+        <h2>Appointment Approved!</h2>
+    </div>
+    
+    <div class="content">
+        <div class="success-icon">
+            ✅
+        </div>
+        <h3>Dear {{ user.username }},</h3>
+        <p>Great news! Your appointment has been approved by our staff. We look forward to seeing you and {{ pet.name }}!</p>
+        
+        <div class="appointment-details">
+            <h4>Your Approved Appointment</h4>
+            <div class="detail-row">
+                <span class="label">Pet:</span> {{ pet.name }} ({{ pet.animal_type }})
+            </div>
+            <div class="detail-row">
+                <span class="label">Service:</span> {{ service.name }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Date:</span> {{ appointment.date|date:"l, F d, Y" }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Time:</span> {{ appointment.time }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Price:</span> ₱{{ service.price }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Status:</span> <strong>{{ appointment.status|title }}</strong>
+            </div>
+        </div>
+        
+        <h4>Important Information:</h4>
+        <ul>
+            <li>Please arrive 10 minutes before your scheduled time</li>
+            <li>Bring your pet's vaccination records if available</li>
+            <li>Make sure your pet is on a leash or in a carrier</li>
+            <li>If you need to cancel, please contact us at least 24 hours in advance</li>
+        </ul>
+        
+        <a href="http://127.0.0.1:8000/dashboard/" class="cta-button">View Your Dashboard</a>
+        
+        <p>We're excited to provide the best grooming experience for {{ pet.name }}!</p>
+        
+        <div class="footer">
+            <p>Woof Buddy Pet Grooming</p>
+            <p>123 Pet Care Street, City Center</p>
+            <p>Phone: (123) 456-7890 | Email: info@woofbuddy.com</p>
+        </div>
+    </div>
+</body>
+</html>

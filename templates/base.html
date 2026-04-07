@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Woof Buddy Grooming{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo">
+            <i class="fas fa-paw"></i> <span>Woof</span> Buddy
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'book_appointment' %}" class="btn btn-primary" style="color:white;">Book Now</a>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline" style="padding: 0.5rem 1rem;">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-primary" style="color:white;">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="main-content fade-in">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                   <div class="card" style="margin-bottom: 1rem; border-left: 4px solid var(--primary);">
+                       <p>{{ message }}</p>
+                   </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Woof Buddy Premium Pet Grooming. All Rights Reserved.</p>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

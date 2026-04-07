@@ -1,0 +1,189 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1>Admin Dashboard</h1>
+            <p class="text-muted">Welcome to the admin panel.</p>
+        </div>
+        <a href="{% url 'admin_logout' %}" class="btn btn-outline-danger">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
+    
+    <!-- Statistics Cards -->
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-users text-primary"></i> Total Users
+                    </h5>
+                    <p class="card-text">{{ total_users }} registered users</p>
+                    <a href="{% url 'admin_users' %}" class="btn btn-primary">Manage Users</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-calendar-alt text-success"></i> Total Appointments
+                    </h5>
+                    <p class="card-text">{{ total_appointments }} appointments booked</p>
+                    <a href="{% url 'admin_appointments' %}" class="btn btn-primary">Manage Appointments</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-cut text-info"></i> Total Services
+                    </h5>
+                    <p class="card-text">{{ total_services }} services offered</p>
+                    <a href="{% url 'admin_services' %}" class="btn btn-primary">Manage Services</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-credit-card text-warning"></i> Total Revenue
+                    </h5>
+                    <p class="card-text">₱{{ total_revenue|floatformat:2 }} earned</p>
+                    <a href="{% url 'admin_payments' %}" class="btn btn-primary">View Payments</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Revenue Breakdown -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-pie"></i> Revenue Breakdown
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <h4 class="text-primary">₱{{ paypal_revenue|floatformat:2 }}</h4>
+                            <p class="mb-0">
+                                <i class="fab fa-paypal"></i> PayPal Revenue
+                            </p>
+                            <small class="text-muted">PayPal payments</small>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="text-success">₱{{ cash_revenue|floatformat:2 }}</h4>
+                            <p class="mb-0">
+                                <i class="fas fa-money-bill-wave"></i> Cash Revenue
+                            </p>
+                            <small class="text-muted">Cash payments</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-line"></i> Quick Stats
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <h4 class="text-info">{{ total_services }}</h4>
+                            <p class="mb-0">Services</p>
+                        </div>
+                        <div class="col-4">
+                            <h4 class="text-warning">{{ total_appointments }}</h4>
+                            <p class="mb-0">Bookings</p>
+                        </div>
+                        <div class="col-4">
+                            <h4 class="text-primary">{{ total_users }}</h4>
+                            <p class="mb-0">Users</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="text-center">
+                        <small class="text-muted">
+                            Average revenue per user: 
+                            <strong>₱{{ avg_revenue_per_user|floatformat:2 }}</strong>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-plus"></i> Recent Appointments
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% for appointment in recent_appointments %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <strong>{{ appointment.pet.name }}</strong> - {{ appointment.service.name }}
+                            <br><small class="text-muted">{{ appointment.user.username }} • {{ appointment.date|date:"M d, Y" }}</small>
+                        </div>
+                        <span class="badge {% if appointment.status == 'completed' %}bg-success{% elif appointment.status == 'approved' %}bg-info{% elif appointment.status == 'cancelled' %}bg-danger{% else %}bg-warning{% endif %}">
+                            {{ appointment.status|title }}
+                        </span>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted text-center">No recent appointments</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-money-bill-wave"></i> Recent Payments
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% for payment in recent_payments %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <strong>₱{{ payment.amount }}</strong> - {{ payment.appointment.service.name }}
+                            <br><small class="text-muted">{{ payment.appointment.user.username }} • {{ payment.created_at|date:"M d, Y" }}</small>
+                        </div>
+                        <div>
+                            {% if payment.method == 'paypal' %}
+                                <span class="badge bg-primary"><i class="fab fa-paypal"></i></span>
+                            {% elif payment.method == 'cash' %}
+                                <span class="badge bg-success"><i class="fas fa-money-bill-wave"></i></span>
+                            {% endif %}
+                            <span class="badge {% if payment.status == 'completed' %}bg-success{% else %}bg-warning{% endif %}">
+                                {{ payment.status|title }}
+                            </span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted text-center">No recent payments</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
