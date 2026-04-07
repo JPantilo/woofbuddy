@@ -1,0 +1,17 @@
+# Requirements for Woof Buddy Pet Grooming System
+Django>=5.2.0
+gunicorn>=20.1.0
+whitenoise>=6.0.0
+psycopg2-binary>=2.9.0
+python-dotenv>=1.0.0
+Pillow>=10.0.0
+dj-database-url>=2.0.0
+
+# Email support
+django-anymail>=10.0
+
+# Security
+django-cors-headers>=4.0.0
+
+# Monitoring (optional)
+sentry-sdk>=1.0.0
