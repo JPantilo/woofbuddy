@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; max-width: 800px; margin: 0 auto; padding: 4rem 2rem;">
+    <h1 style="font-size: 3.5rem; margin-bottom: 1rem; color: var(--text-main);">
+        Premium Pet Grooming <span style="color: var(--primary);">Reimagined</span>
+    </h1>
+    <p style="font-size: 1.2rem; margin-bottom: 3rem;">
+        Experience the next generation of pet care. Book appointments instantly, track your pet's history, and pay seamlessly online.
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="{% url 'book_appointment' %}" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+            <i class="fas fa-calendar-plus"></i> Book Appointment
+        </a>
+        {% if not user.is_authenticated %}
+        <a href="{% url 'register' %}" class="btn btn-outline" style="font-size: 1.1rem; padding: 1rem 2rem;">
+            Create Account
+        </a>
+        {% else %}
+        <a href="{% url 'dashboard' %}" class="btn btn-outline" style="font-size: 1.1rem; padding: 1rem 2rem;">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem;">
+    <div class="card" style="text-align: center;">
+        <i class="fas fa-cut" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+        <h3>Expert Grooming</h3>
+        <p>Our certified groomers provide top-tier care for your furry friends using organic, pet-safe products.</p>
+    </div>
+    <div class="card" style="text-align: center;">
+        <i class="fas fa-clock" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+        <h3>Easy Booking</h3>
+        <p>Schedule, reschedule, or cancel appointments through our sleek online portal in just a few clicks.</p>
+    </div>
+    <div class="card" style="text-align: center;">
+        <i class="fas fa-credit-card" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+        <h3>Seamless Payments</h3>
+        <p>Pay securely via our advanced simulated payment gateway utilizing modern encryption.</p>
+    </div>
+</div>
+{% endblock %}
