@@ -3,29 +3,13 @@ services:
     name: woofbuddy
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn woofbuddy.wsgi:application --bind 0.0.0.0:$PORT
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+    startCommand: python -m gunicorn grooming.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: woofbuddy.settings_prod
-      - key: PYTHON_VERSION
-        value: 3.9.0
-      - key: SECRET_KEY
-        generateValue: true
+        value: grooming.settings
       - key: DEBUG
         value: false
       - key: ALLOWED_HOSTS
         value: .onrender.com
-      - key: EMAIL_HOST
-        value: smtp.gmail.com
-      - key: EMAIL_PORT
-        value: 587
-      - key: EMAIL_USE_TLS
-        value: true
-      - key: PAYPAL_MODE
-        value: sandbox
     autoDeploy: true
-    healthCheckPath: /
-    healthCheckTimeout: 100
-    healthCheckGracePeriod: 10
-    healthCheckInterval: 30
