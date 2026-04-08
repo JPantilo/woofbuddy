@@ -100,3 +100,6 @@ SERVER_EMAIL = EMAIL_HOST_USER
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'home'
+
+# Custom User Model
+AUTH_USER_MODEL = 'users.User'
