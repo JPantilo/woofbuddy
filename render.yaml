@@ -3,8 +3,8 @@ services:
     name: woofbuddy
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate && python create_admin.py
-    startCommand: python -m gunicorn grooming.wsgi:application --bind 0.0.0.0:$PORT
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+    startCommand: python create_admin.py && python -m gunicorn grooming.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: grooming.settings_prod
