@@ -1,18 +1,18 @@
 :root {
-  --primary: #8B5A3C;
-  --primary-hover: #6B4423;
-  --secondary: #D4A574;
-  --bg-color: #FFF8F3;
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary: #64748b;
+  --bg-color: #f8fafc;
   --card-bg: #FFFFFF;
-  --card-border: #E8D5C4;
-  --text-main: #4A3C28;
-  --text-muted: #8B7355;
+  --card-border: #e2e8f0;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
   --font-family: 'Inter', system-ui, sans-serif;
-  --nav-bg: #FFFFFF;
-  --accent: #F5E6D3;
-  --success: #7CB342;
-  --warning: #FFB74D;
-  --danger: #E57373;
+  --nav-bg: rgba(255, 255, 255, 0.95);
+  --accent: #f1f5f9;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
 }
 
 * {
@@ -59,13 +59,15 @@ p {
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: #1e1b4b;
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  letter-spacing: -0.5px;
 }
 
 .logo span {

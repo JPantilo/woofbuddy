@@ -70,9 +70,9 @@ PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_EMAIL', '')
 
 # Update return URLs for production
 BASE_URL = os.environ.get('BASE_URL', 'https://woofbuddy.onrender.com')
-PAYPAL_RETURN_URL = f'{BASE_URL}/paypal-return/'
-PAYPAL_CANCEL_URL = f'{BASE_URL}/paypal-cancel/'
-PAYPAL_NOTIFY_URL = f'{BASE_URL}/paypal-notify/'
+PAYPAL_RETURN_URL = f'{BASE_URL}/payments/paypal/return/'
+PAYPAL_CANCEL_URL = f'{BASE_URL}/payments/paypal/cancel/'
+PAYPAL_NOTIFY_URL = f'{BASE_URL}/payments/paypal/notify/'
 
 # Logging configuration
 LOGGING = {
