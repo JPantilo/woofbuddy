@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}My Pets - Woof Buddy{% endblock %}
+
+{% block content %}
+<div class="header-section" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1><i class="fas fa-pets"></i> My Pets</h1>
+    <a href="{% url 'pet_create' %}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add New Pet
+    </a>
+</div>
+
+{% if pets %}
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+    {% for pet in pets %}
+    <div class="card fade-in">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+            <div>
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">
+                    {{ pet.name }}
+                    <span style="font-size: 0.8rem; font-weight: normal; color: #666; background: #eee; padding: 0.2rem 0.5rem; border-radius: 10px;">
+                        {{ pet.animal_type }}
+                    </span>
+                </h3>
+                <p><strong>Breed:</strong> {{ pet.breed }}</p>
+                <p><strong>Age:</strong> {{ pet.age_years }} years</p>
+                <p><strong>Gender:</strong> {{ pet.get_gender_display }}</p>
+            </div>
+            <div style="font-size: 2rem; color: #ddd;">
+                {% if pet.animal_type == 'Dog' %}
+                    <i class="fas fa-dog"></i>
+                {% elif pet.animal_type == 'Cat' %}
+                    <i class="fas fa-cat"></i>
+                {% else %}
+                    <i class="fas fa-paw"></i>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem; border-top: 1px solid #eee; padding-top: 1rem;">
+            <a href="{% url 'pet_update' pet.pk %}" class="btn btn-outline" style="flex: 1; text-align: center; font-size: 0.9rem;">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a href="{% url 'pet_delete' pet.pk %}" class="btn" style="flex: 1; text-align: center; font-size: 0.9rem; color: #dc3545; border: 1px solid #dc3545;">
+                <i class="fas fa-trash"></i> Remove
+            </a>
+            <a href="{% url 'book_appointment' %}?pet={{ pet.id }}" class="btn btn-primary" style="flex: 1.5; text-align: center; font-size: 0.9rem;">
+                Book
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="card" style="text-align: center; padding: 4rem 2rem;">
+    <div style="font-size: 4rem; color: #ddd; margin-bottom: 1.5rem;">
+        <i class="fas fa-paw"></i>
+    </div>
+    <h2>No pets added yet</h2>
+    <p style="color: #666; margin-bottom: 2rem;">Add your pets to start booking grooming appointments!</p>
+    <a href="{% url 'pet_create' %}" class="btn btn-primary">Add Your First Pet</a>
+</div>
+{% endif %}
+{% endblock %}

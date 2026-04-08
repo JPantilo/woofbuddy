@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Remove {{ pet.name }} - Woof Buddy{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 4rem auto;">
+    <div class="card" style="border-top: 5px solid #dc3545;">
+        <h2 style="color: #dc3545; margin-bottom: 1.5rem;">
+            <i class="fas fa-exclamation-triangle"></i> Remove Pet Profile?
+        </h2>
+        
+        <p>Are you sure you want to remove <strong>{{ pet.name }}</strong> from your profile? This action will also cancel any upcoming appointments for this pet.</p>
+        
+        <div style="background: #fff8f8; padding: 1rem; border-radius: 8px; margin: 1.5rem 0; border: 1px solid #f8d7da;">
+            <p style="margin: 0; color: #721c24; font-size: 0.9rem;">
+                <strong>Warning:</strong> This cannot be undone.
+            </p>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn" style="flex: 1; background: #dc3545; color: white;">
+                    Yes, Remove {{ pet.name }}
+                </button>
+                <a href="{% url 'pet_list' %}" class="btn btn-outline" style="flex: 1; text-align: center;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

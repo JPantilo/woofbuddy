@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Woof Buddy{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 2rem auto;">
+    <div class="card">
+        <h2 style="margin-bottom: 1.5rem; color: var(--primary);">
+            <i class="fas fa-paw"></i> {{ title }}
+        </h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="input-wrapper">
+                        {{ field }}
+                    </div>
+                    {% if field.errors %}
+                        <div style="color: red; font-size: 0.8rem; margin-top: 0.3rem;">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <small style="display: block; color: #666; margin-top: 0.3rem;">{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 2;">
+                    {% if pet %}Update Pet Details{% else %}Add Pet to Profile{% endif %}
+                </button>
+                <a href="{% url 'pet_list' %}" class="btn btn-outline" style="flex: 1; text-align: center;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Styling for Django-generated widgets */
+    input[type="text"], 
+    input[type="number"], 
+    select, 
+    textarea {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
+</style>
+{% endblock %}
