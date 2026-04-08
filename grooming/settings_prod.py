@@ -14,6 +14,12 @@ ALLOWED_HOSTS = [
     'www.woofbuddy.onrender.com',
 ]
 
+# CSRF settings for Render
+CSRF_TRUSTED_ORIGINS = [
+    'https://woofbuddy.onrender.com',
+    'https://*.onrender.com',
+]
+
 # Database configuration for production
 # Render automatically provides DATABASE_URL
 DATABASES = {
