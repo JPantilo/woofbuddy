@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - Woof Buddy{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 2rem auto;">
+    <div class="card">
+        <h2 style="text-align: center; margin-bottom: 2rem; color: var(--primary);">
+            <i class="fas fa-user-plus"></i> Join Woof Buddy
+        </h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div style="color: red; font-size: 0.8rem; margin-top: 0.2rem;">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <small style="display: block; color: #666; margin-top: 0.2rem;">{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                Create Account
+            </button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 1.5rem; border-top: 1px solid var(--card-border); padding-top: 1.5rem;">
+            <p>Already have an account? <a href="{% url 'login' %}" style="color: var(--primary);">Login here</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
