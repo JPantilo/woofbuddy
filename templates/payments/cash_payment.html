@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Cash Payment Confirmation - Woof Buddy{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 4rem auto;">
+    <div class="card" style="text-align: center; border-top: 5px solid var(--primary); padding: 3rem 2rem;">
+        <div style="font-size: 4rem; color: var(--primary); margin-bottom: 2rem;">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <h2 style="margin-bottom: 1.5rem;">Appointment Requested!</h2>
+        
+        <p style="color: #666; line-height: 1.6; margin-bottom: 2rem;">
+            Your appointment for <strong>{{ appointment.pet.name }}</strong> has been successfully booked. 
+            Since you chose <strong>Cash Payment</strong>, please prepare <strong>₱{{ appointment.service.price }}</strong> 
+            to be paid at the salon when you arrive.
+        </p>
+        
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; text-align: left; border: 1px dashed #ddd;">
+            <p style="margin: 0.5rem 0;"><strong>Date:</strong> {{ appointment.date }}</p>
+            <p style="margin: 0.5rem 0;"><strong>Time:</strong> {{ appointment.time }}</p>
+            <p style="margin: 0.5rem 0;"><strong>Service:</strong> {{ appointment.service.name }}</p>
+            <p style="margin: 0.5rem 0; font-size: 1.2rem; color: var(--primary);"><strong>Total: ₱{{ appointment.service.price }}</strong></p>
+        </div>
+        
+        <div style="display: flex; gap: 1rem;">
+            <a href="{% url 'dashboard' %}" class="btn btn-primary" style="flex: 1; text-align: center;">Go to Dashboard</a>
+            <a href="{% url 'home' %}" class="btn btn-outline" style="flex: 1; text-align: center;">Back to Home</a>
+        </div>
+    </div>
+</div>
+{% block extra_css %}
+<style>
+    .card {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+</style>
+{% endblock %}
+{% endblock %}

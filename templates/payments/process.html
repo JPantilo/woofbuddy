@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Processing Payment - Woof Buddy{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 4rem auto; text-align: center;">
+    <div class="card" style="padding: 4rem 2rem;">
+        <!-- Loading Animation -->
+        <div class="spinner" style="width: 80px; height: 80px; border: 8px solid #f3f3f3; border-top: 8px solid var(--primary); border-radius: 50%; display: inline-block; animation: spin 1s linear infinite; margin-bottom: 2rem;"></div>
+        
+        <h2 style="margin-bottom: 1.5rem;">Processing Your Payment</h2>
+        <p style="color: #666; line-height: 1.6;">
+            Please wait while we redirect you to the secure payment portal. Do not close your browser or refresh the page.
+        </p>
+        
+        <div style="margin-top: 3rem; color: #999; font-size: 0.9rem;">
+            <i class="fas fa-lock"></i> Secured by PayPal Encryption
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+{% endblock %}

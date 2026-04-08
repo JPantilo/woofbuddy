@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Select Payment Method - Woof Buddy{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 2rem auto;">
+    <div class="header-section" style="text-align: center; margin-bottom: 3rem;">
+        <h1>Complete Your Booking</h1>
+        <p style="color: #666;">Please select how you would like to pay for your appointment.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <!-- PayPal Option -->
+        <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 5px solid #0070ba;">
+            <div>
+                <div style="font-size: 2.5rem; color: #0070ba; margin-bottom: 1rem; text-align: center;">
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+                <h3 style="text-align: center; margin-bottom: 1rem;">Pay with PayPal</h3>
+                <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">
+                    Fast and secure payment using your PayPal account or credit card. Your appointment will be <strong>confirmed immediately</strong>.
+                </p>
+            </div>
+            <div style="margin-top: 2rem;">
+                <a href="{% url 'payments:create_paypal_payment' appointment.id %}" class="btn btn-primary" style="width: 100%; text-align: center; background: #0070ba; border-color: #0070ba;">
+                    Pay with PayPal
+                </a>
+            </div>
+        </div>
+
+        <!-- Cash Option -->
+        <div class="card fade-in" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 5px solid var(--primary);">
+            <div>
+                <div style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; text-align: center;">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3 style="text-align: center; margin-bottom: 1rem;">Pay at Salon (Cash)</h3>
+                <p style="color: #666; font-size: 0.95rem; line-height: 1.5;">
+                    Choose this to pay in person when you arrive at Woof Buddy. Your appointment will be <strong>pending</strong> until you arrive.
+                </p>
+            </div>
+            <div style="margin-top: 2rem;">
+                <a href="{% url 'payments:process_cash_payment' appointment.id %}" class="btn btn-outline" style="width: 100%; text-align: center;">
+                    Pay at Salon
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 3rem; background: #f9f9f9; padding: 1.5rem;">
+        <h4 style="margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Appointment Summary</h4>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+            <span><strong>Service:</strong> {{ appointment.service.name }}</span>
+            <span style="font-weight: bold; color: var(--primary);">₱{{ appointment.service.price }}</span>
+        </div>
+        <p style="margin: 0; font-size: 0.9rem; color: #666;">
+            <strong>Pet:</strong> {{ appointment.pet.name }} | 
+            <strong>Date:</strong> {{ appointment.date }} | 
+            <strong>Time:</strong> {{ appointment.time }}
+        </p>
+    </div>
+</div>
+{% endblock %}

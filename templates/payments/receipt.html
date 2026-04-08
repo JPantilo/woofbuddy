@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment Receipt - Woof Buddy{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 3rem auto;">
+    <div class="card" style="padding: 3rem; border-top: 5px solid #28a745;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <div style="font-size: 3rem; color: #28a745; margin-bottom: 1rem;">
+                <i class="fas fa-receipt"></i>
+            </div>
+            <h2 style="margin: 0;">Payment Receipt</h2>
+            <p style="color: #666;">Thank you for your business!</p>
+        </div>
+
+        <div style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+                <span style="color: #666;">Transaction ID:</span>
+                <span style="font-family: monospace;">{{ payment.transaction_id }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+                <span style="color: #666;">Date:</span>
+                <span>{{ payment.completed_at }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span style="color: #666;">Payment Method:</span>
+                <span style="text-transform: capitalize;">{{ payment.method }}</span>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <h4 style="margin-bottom: 1rem;">Service Details</h4>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>{{ payment.appointment.service.name }} for {{ payment.appointment.pet.name }}</span>
+                <span>₱{{ payment.amount }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-top: 2px solid #eee; padding-top: 1rem; margin-top: 1rem;">
+                <span>Total Paid</span>
+                <span style="color: var(--primary);">₱{{ payment.amount }}</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; display: flex; gap: 1rem;">
+            <button onclick="window.print()" class="btn btn-outline" style="flex: 1;">
+                <i class="fas fa-print"></i> Print Receipt
+            </button>
+            <a href="{% url 'dashboard' %}" class="btn btn-primary" style="flex: 1; text-align: center;">Go to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
