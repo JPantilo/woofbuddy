@@ -1,113 +1,114 @@
 {% extends 'admin_base.html' %}
 
-{% block title %}Appointment Management{% endblock %}
+{% block title %}Appointment Management - Woof Buddy{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Appointment Management</h1>
-        <div>
-            <a href="{% url 'admin_appointment_history' %}" class="btn btn-outline-secondary me-2">
-                <i class="fas fa-history"></i> View History
-            </a>
-            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left"></i> Back to Dashboard
-            </a>
-        </div>
+<div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+        <h1 class="display-5 fw-bold" style="color: #1e1b4b; letter-spacing: -1px;">Appointments</h1>
+        <p class="text-secondary">Track, approve, and manage pet grooming sessions.</p>
     </div>
-    
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead class="table-light">
-                <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Customer</th>
-                    <th>Pet</th>
-                    <th>Service</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for appointment in appointments %}
-                <tr>
-                    <td>{{ appointment.date|date:"M d, Y" }}</td>
-                    <td>{{ appointment.time }}</td>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-sm bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px; font-size: 14px;">
-                                {{ appointment.user.username|slice:":1"|upper }}
-                            </div>
-                            {{ appointment.user.username }}
-                        </div>
-                    </td>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-sm bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px; font-size: 14px;">
-                                <i class="fas fa-paw"></i>
-                            </div>
-                            {{ appointment.pet.name }}
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <strong>{{ appointment.service.name }}</strong>
-                            <br><small class="text-muted">₱{{ appointment.service.price }}</small>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="badge {% if appointment.status == 'completed' %}bg-success{% elif appointment.status == 'approved' %}bg-info{% elif appointment.status == 'cancelled' %}bg-danger{% else %}bg-warning{% endif %}">
-                            {{ appointment.status|title }}
-                        </span>
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <a href="{% url 'admin_edit_appointment' appointment.id %}" class="btn btn-sm btn-primary" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            {% if appointment.status == 'pending' %}
-                                <a href="{% url 'admin_approve_appointment' appointment.id %}" class="btn btn-sm btn-success" title="Approve">
-                                    <i class="fas fa-check"></i>
-                                </a>
-                            {% endif %}
-                            {% if appointment.status == 'approved' %}
-                                {% if appointment.payment and appointment.payment.status == 'completed' %}
-                                <a href="{% url 'admin_complete_appointment' appointment.id %}" class="btn btn-sm btn-success" title="Complete">
-                                    <i class="fas fa-check-double"></i>
-                                </a>
-                                {% elif appointment.payment and appointment.payment.method == 'cash' %}
-                                <a href="{% url 'admin_complete_appointment' appointment.id %}" class="btn btn-sm btn-success" title="Complete (Pay at Salon)">
-                                    <i class="fas fa-check-double"></i>
-                                </a>
-                                {% else %}
-                                <button class="btn btn-sm btn-success" title="Complete (Payment Required)" disabled>
-                                    <i class="fas fa-check-double"></i>
-                                </button>
-                                {% endif %}
-                            {% endif %}
-                            <a href="{% url 'admin_cancel_appointment' appointment.id %}" class="btn btn-sm btn-danger" title="Cancel">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="7" class="text-center py-4">
-                        <div class="py-3">
-                            <i class="fas fa-calendar-alt fa-2x text-muted mb-2"></i>
-                            <h5 class="text-muted">No active appointments</h5>
-                            <p class="text-muted">There are no pending or approved appointments at the moment.</p>
-                            <a href="{% url 'admin_appointment_history' %}" class="btn btn-outline-primary">
-                                <i class="fas fa-history"></i> View Appointment History
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="d-flex gap-2">
+        <a href="{% url 'book_appointment' %}" class="btn btn-premium">
+            <i class="fas fa-plus me-2"></i> New Appointment
+        </a>
     </div>
 </div>
+
+<div class="card card-admin border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="px-4 py-3 border-0">Pet & Owner</th>
+                        <th class="py-3 border-0">Service</th>
+                        <th class="py-3 border-0">Schedule</th>
+                        <th class="py-3 border-0">Status</th>
+                        <th class="px-4 py-3 border-0 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td class="px-4 py-4">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar flex-shrink-0 me-3 shadow-sm bg-indigo-soft text-indigo" style="width: 45px; height: 45px;">
+                                    <i class="fas fa-paw"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold fs-6">{{ appointment.pet.name }}</div>
+                                    <div class="text-secondary small">Owner: {{ appointment.user.get_full_name|default:appointment.user.username }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="fw-bold">{{ appointment.service.name }}</div>
+                            <div class="text-secondary small">₱{{ appointment.service.price }}</div>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-column">
+                                <span class="small fw-bold"><i class="far fa-calendar-alt text-secondary me-2"></i> {{ appointment.date|date:"F d, Y" }}</span>
+                                <span class="small mt-1"><i class="far fa-clock text-secondary me-2"></i> {{ appointment.time }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge rounded-pill px-3 py-2 
+                                {% if appointment.status == 'completed' %}bg-success-soft text-success
+                                {% elif appointment.status == 'approved' %}bg-info-soft text-info
+                                {% elif appointment.status == 'cancelled' %}bg-danger-soft text-danger
+                                {% else %}bg-warning-soft text-warning{% endif %}">
+                                {{ appointment.status|title }}
+                            </span>
+                        </td>
+                        <td class="px-4 text-end">
+                            <div class="btn-group shadow-sm rounded-3 overflow-hidden">
+                                {% if appointment.status == 'pending' %}
+                                    <a href="{% url 'admin_approve_appointment' appointment.id %}" class="btn btn-white btn-sm px-3" title="Approve">
+                                        <i class="fas fa-check text-success"></i>
+                                    </a>
+                                {% endif %}
+                                
+                                {% if appointment.status == 'approved' %}
+                                    <a href="{% url 'admin_complete_appointment' appointment.id %}" class="btn btn-white btn-sm px-3" title="Mark Completed">
+                                        <i class="fas fa-flag-checkered text-primary"></i>
+                                    </a>
+                                {% endif %}
+
+                                <a href="{% url 'admin_edit_appointment' appointment.id %}" class="btn btn-white btn-sm px-3" title="Edit">
+                                    <i class="far fa-edit text-info"></i>
+                                </a>
+
+                                {% if appointment.status != 'cancelled' %}
+                                    <a href="{% url 'admin_cancel_appointment' appointment.id %}" class="btn btn-white btn-sm px-3" title="Cancel">
+                                        <i class="fas fa-times text-danger"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <i class="far fa-calendar-times display-4 text-light mb-3"></i>
+                            <p class="text-secondary">No appointments scheduled.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-success-soft { background-color: rgba(20, 184, 166, 0.1); }
+    .bg-info-soft { background-color: rgba(99, 102, 241, 0.1); }
+    .bg-danger-soft { background-color: rgba(239, 68, 68, 0.1); }
+    .bg-warning-soft { background-color: rgba(245, 158, 11, 0.1); }
+    .bg-indigo-soft { background-color: rgba(99, 102, 241, 0.1); }
+    .text-indigo { color: #6366f1; }
+    .btn-white { background: #fff; border: 1px solid #e2e8f0; }
+    .btn-white:hover { background: #f8fafc; }
+</style>
 {% endblock %}
