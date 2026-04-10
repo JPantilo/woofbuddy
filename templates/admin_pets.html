@@ -1,0 +1,97 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Pet Management - Woof Buddy{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+        <h1 class="display-5 fw-bold" style="color: #1e1b4b; letter-spacing: -1px;">Pet Management</h1>
+        <p class="text-secondary">View and manage all registered pets in the system.</p>
+    </div>
+</div>
+
+<div class="card card-admin border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="px-4 py-3 border-0">Pet Info</th>
+                        <th class="py-3 border-0">Owner</th>
+                        <th class="py-3 border-0">Type & Breed</th>
+                        <th class="py-3 border-0">Gender & Age</th>
+                        <th class="py-3 border-0">Added On</th>
+                        <th class="px-4 py-3 border-0 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pet in pets %}
+                    <tr>
+                        <td class="px-4 py-4">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar flex-shrink-0 me-3 shadow-sm" style="width: 45px; height: 45px; background: #fffbeb; color: #f59e0b; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-weight: bold;">
+                                    <i class="fas fa-paw"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold fs-6">{{ pet.name }}</div>
+                                    <div class="text-secondary small">ID: #PET-{{ pet.id|stringformat:"04d" }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class="far fa-user text-secondary me-2"></i>
+                                <div>
+                                    <div class="small fw-bold">{{ pet.owner.username }}</div>
+                                    <div class="small text-secondary">{{ pet.owner.email }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-secondary px-3 py-2 rounded-pill mb-1">
+                                {{ pet.animal_type }}
+                            </span>
+                            <div class="small text-muted">{{ pet.breed|default:"Unknown Breed" }}</div>
+                        </td>
+                        <td>
+                            <div class="small">
+                                <span class="{% if pet.gender == 'M' %}text-primary{% elif pet.gender == 'F' %}text-danger{% else %}text-secondary{% endif %}">
+                                    <i class="fas fa-{% if pet.gender == 'M' %}mars{% elif pet.gender == 'F' %}venus{% else %}genderless{% endif %}"></i>
+                                    {{ pet.get_gender_display }}
+                                </span>
+                            </div>
+                            <div class="small text-secondary mt-1">{{ pet.age_years|default:"?" }} years old</div>
+                        </td>
+                        <td class="text-secondary small">
+                            {{ pet.created_at|date:"M j, Y" }}
+                        </td>
+                        <td class="px-4 text-end">
+                            <div class="btn-group shadow-sm rounded-3 overflow-hidden">
+                                <a href="{% url 'admin_user_details' pet.owner.id %}" class="btn btn-white btn-sm px-3" title="View Owner">
+                                    <i class="far fa-user text-primary"></i>
+                                </a>
+                                <button class="btn btn-white btn-sm px-3" title="Edit Pet (Coming Soon)">
+                                    <i class="far fa-edit text-info"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5">
+                            <i class="fas fa-paw display-4 text-light mb-3"></i>
+                            <p class="text-secondary">No pets have been registered yet.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-white { background: #fff; border: 1px solid #e2e8f0; }
+    .btn-white:hover { background: #f8fafc; }
+</style>
+{% endblock %}

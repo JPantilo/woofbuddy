@@ -1,0 +1,90 @@
+{% extends is_admin|yesno:"admin_base.html,base.html" %}
+
+{% block title %}Messages with {{ other_user.username }} - Woof Buddy{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Chat Card -->
+            <div class="card shadow-lg border-0" style="border-radius: 20px; overflow: hidden; height: 75vh;">
+                <div class="row g-0 h-100">
+                    <!-- Chat Area -->
+                    <div class="col-12 d-flex flex-column h-100">
+                        <!-- Chat Header -->
+                        <div class="p-4 border-bottom d-flex align-items-center justify-content-between" style="background: #fff;">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar me-3 shadow-sm" style="width: 50px; height: 50px; background: {% if is_admin %}#fef3c7{% else %}#eef2ff{% endif %}; color: {% if is_admin %}#d97706{% else %}#4f46e5{% endif %}; display: flex; align-items: center; justify-content: center; border-radius: 15px; font-weight: bold; font-size: 1.2rem;">
+                                    {{ other_user.username|slice:":1"|upper }}
+                                </div>
+                                <div>
+                                    <h5 class="mb-0 fw-bold">{{ other_user.username }}</h5>
+                                    <small class="text-success"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> Active Now</small>
+                                </div>
+                            </div>
+                            {% if is_admin %}
+                            <a href="{% url 'communications:chat_list' %}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                                <i class="fas fa-arrow-left me-2"></i> Back to all chats
+                            </a>
+                            {% endif %}
+                        </div>
+
+                        <!-- Chat Messages -->
+                        <div id="chat-box" class="flex-grow-1 p-4 overflow-auto d-flex flex-column gap-3" style="background: #f8fafc;">
+                            {% for message in chat_messages %}
+                            <div class="d-flex {% if message.sender == request.user %}justify-content-end{% endif %}">
+                                <div class="message-bubble p-3 shadow-sm" style="max-width: 75%; border-radius: {% if message.sender == request.user %}20px 20px 0 20px; background: #4f46e5; color: white;{% else %}20px 20px 20px 0; background: white; color: #1e293b;{% endif %}">
+                                    <div class="content">{{ message.content }}</div>
+                                    <div class="small mt-2 {% if message.sender == request.user %}text-white-50 text-end{% else %}text-secondary{% endif %}" style="font-size: 0.7rem;">
+                                        {{ message.created_at|time:"g:i A" }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="text-center my-auto">
+                                <i class="far fa-comment-dots display-1 text-light mb-3"></i>
+                                <p class="text-secondary">No messages yet. Say hello!</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div class="p-4 border-top bg-white">
+                            <form method="post" class="d-flex gap-2">
+                                {% csrf_token %}
+                                <input type="text" name="content" class="form-control rounded-pill px-4 border-2" placeholder="Type your message here..." required autocomplete="off">
+                                <button type="submit" class="btn btn-primary rounded-circle shadow" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #chat-box::-webkit-scrollbar {
+        width: 6px;
+    }
+    #chat-box::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+    }
+    .message-bubble {
+        position: relative;
+        transition: transform 0.2s ease;
+    }
+    .message-bubble:hover {
+        transform: scale(1.01);
+    }
+</style>
+
+<script>
+    // Scroll to bottom of chat
+    const chatBox = document.getElementById('chat-box');
+    chatBox.scrollTop = chatBox.scrollHeight;
+</script>
+{% endblock %}

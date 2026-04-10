@@ -39,11 +39,17 @@
 </div>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-    <!-- Pets Section -->
     <div class="card">
         <h3 style="color: var(--primary);"><i class="fas fa-paw"></i> My Pets</h3>
         <p>You have {{ user.pets.count }} registered pets.</p>
         <a href="{% url 'pet_list' %}" class="btn btn-outline" style="margin-top: 1rem; display: block; text-align: center;">Manage Pets</a>
+    </div>
+
+    <!-- Messages Section -->
+    <div class="card">
+        <h3 style="color: var(--primary);"><i class="fas fa-comment-alt"></i> Messages</h3>
+        <p>Talk to our grooming experts for any questions.</p>
+        <a href="{% url 'communications:user_chat' %}" class="btn btn-outline" style="margin-top: 1rem; display: block; text-align: center;">Open Chat</a>
     </div>
 
     <!-- Appointments Section -->

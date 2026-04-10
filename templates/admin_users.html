@@ -78,9 +78,9 @@
                                 <a href="{% url 'admin_edit_user' user_obj.id %}" class="btn btn-white btn-sm px-3" title="Edit Account">
                                     <i class="far fa-edit text-info"></i>
                                 </a>
-                                <button class="btn btn-white btn-sm px-3" title="Message User">
+                                <a href="{% url 'communications:admin_chat' user_obj.id %}" class="btn btn-white btn-sm px-3" title="Message User">
                                     <i class="far fa-comment-alt text-secondary"></i>
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>

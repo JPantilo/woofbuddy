@@ -231,6 +231,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{% url 'communications:chat_list' %}" class="nav-link-admin {% if 'communications' in request.path %}active{% endif %}">
+                    <i class="fas fa-inbox"></i>
+                    <span>Inbox</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{% url 'admin_services' %}" class="nav-link-admin {% if 'service' in request.path %}active{% endif %}">
                     <i class="fas fa-cut"></i>
                     <span>Services</span>

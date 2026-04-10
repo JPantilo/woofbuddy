@@ -1,0 +1,65 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Recent Conversations - Woof Buddy{% endblock %}
+
+{% block content %}
+<div class="header-section mb-5">
+    <h1 class="display-5 fw-bold" style="color: #1e1b4b; letter-spacing: -1px;">Inbox</h1>
+    <p class="text-secondary">Keep in touch with your customers and manage support requests.</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card card-admin border-0">
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% for user_conversation in users %}
+                    <a href="{% url 'communications:admin_chat' user_conversation.id %}" class="list-group-item list-group-item-action p-4 border-0 mb-2 rounded-3 shadow-sm d-flex align-items-center justify-content-between transition-all hover-translate">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-3 shadow-sm" style="width: 55px; height: 55px; background: #eef2ff; color: #4f46e5; display: flex; align-items: center; justify-content: center; border-radius: 15px; font-weight: bold; font-size: 1.2rem;">
+                                {{ user_conversation.username|slice:":1"|upper }}
+                            </div>
+                            <div>
+                                <h6 class="mb-1 fw-bold">{{ user_conversation.username }}</h6>
+                                <p class="text-secondary small mb-0">{{ user_conversation.email }}</p>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge rounded-pill bg-primary px-3 py-2">Open Chat <i class="fas fa-chevron-right ms-2"></i></span>
+                        </div>
+                    </a>
+                    {% empty %}
+                    <div class="text-center py-5">
+                        <i class="far fa-comments display-1 text-light mb-3"></i>
+                        <p class="text-secondary fs-5">Your inbox is empty.</p>
+                        <a href="{% url 'admin_users' %}" class="btn btn-primary px-4 rounded-pill">Find a user to message</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card card-admin p-4" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white;">
+            <h5 class="fw-bold mb-3"><i class="fas fa-info-circle me-2"></i> Messaging Tips</h5>
+            <ul class="list-unstyled small">
+                <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Be professional and friendly.</li>
+                <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Use messages to confirm custom pet needs.</li>
+                <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Customers receive messages in their dashboard.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-translate {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-translate:hover {
+        transform: translateX(10px);
+        background-color: #fafafa !important;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+    }
+</style>
+{% endblock %}

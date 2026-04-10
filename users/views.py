@@ -7,7 +7,7 @@ from django.db.models import Sum
 from .models import User
 from .forms import CustomUserCreationForm
 from .decorators import admin_required
-from appointments.models import Appointment, Service
+from appointments.models import Appointment, Service, Pet
 from appointments.notifications import send_appointment_approval_notification, send_appointment_cancellation
 from payments.models import Payment
 
@@ -45,7 +45,8 @@ def admin_dashboard(request):
     
     # Get statistics
     total_users = User.objects.filter(is_staff=False).count()
-    total_services = Service.objects.count()
+    total_services = Service.objects.filter(is_active=True).count()
+    total_pets = Pet.objects.count()
     
     # Appointment statistics
     total_appointments = Appointment.objects.count()
@@ -64,6 +65,7 @@ def admin_dashboard(request):
     # Recent activity
     recent_appointments = Appointment.objects.order_by('-created_at')[:5]
     recent_payments = Payment.objects.order_by('-created_at')[:5]
+    recent_pets = Pet.objects.select_related('owner').order_by('-created_at')[:5]
     
     # Calculate average revenue per user
     avg_revenue_per_user = total_revenue / total_users if total_users > 0 else 0
@@ -75,15 +77,23 @@ def admin_dashboard(request):
         'completed_appointments': completed_appointments,
         'cancelled_appointments': cancelled_appointments,
         'total_services': total_services,
+        'total_pets': total_pets,
         'total_revenue': total_revenue,
         'paypal_revenue': paypal_revenue,
         'cash_revenue': cash_revenue,
         'avg_revenue_per_user': avg_revenue_per_user,
         'recent_appointments': recent_appointments,
         'recent_payments': recent_payments,
+        'recent_pets': recent_pets,
     }
     
     return render(request, 'admin_dashboard.html', context)
+
+@login_required
+@admin_required
+def admin_pets(request):
+    pets = Pet.objects.all().select_related('owner').order_by('-created_at')
+    return render(request, 'admin_pets.html', {'pets': pets})
 
 @login_required
 def admin_users(request):

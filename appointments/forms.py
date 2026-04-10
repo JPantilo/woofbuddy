@@ -14,11 +14,13 @@ class AppointmentForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if user.is_staff:
-            # For admin editing, allow all pets
+            # For admin editing, allow all pets and services
             self.fields['pet'].queryset = Pet.objects.all()
         else:
-            # For regular users, only show their own pets
+            # For regular users, only show their own pets and active services
             self.fields['pet'].queryset = Pet.objects.filter(owner=user)
+            from .models import Service
+            self.fields['service'].queryset = Service.objects.filter(is_active=True)
 
 class PetForm(forms.ModelForm):
     class Meta:

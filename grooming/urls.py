@@ -11,6 +11,7 @@ urlpatterns = [
     path('register/', user_views.register, name='register'),
     path('admin-dashboard/', user_views.admin_dashboard, name='admin_dashboard'),
     path('admin-users/', user_views.admin_users, name='admin_users'),
+    path('admin-pets/', user_views.admin_pets, name='admin_pets'),
     path('admin-edit-user/<int:user_id>/', user_views.admin_edit_user, name='admin_edit_user'),
     path('admin-user-details/<int:user_id>/', user_views.admin_user_details, name='admin_user_details'),
     path('admin-appointments/', user_views.admin_appointments, name='admin_appointments'),
@@ -31,4 +32,5 @@ urlpatterns = [
     path('admin-logout/', admin_logout, name='admin_logout'),
     path('appointments/', include('appointments.urls')),
     path('payments/', include('payments.urls')),
+    path('communications/', include('communications.urls')),
 ]
