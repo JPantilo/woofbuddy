@@ -342,30 +342,3 @@ def admin_delete_service(request, service_id):
     
     messages.error(request, f'Service "{service_name}" has been deleted!')
     return redirect('admin_services')
-
-def create_admin_user(request):
-    """Temporary view to create admin user without shell access"""
-    if request.method == 'POST':
-        username = request.POST.get('username', 'admin')
-        email = request.POST.get('email', 'admin@woofbuddy.com')
-        password = request.POST.get('password', 'Admin123!')
-        
-        # Check if user already exists
-        if User.objects.filter(username=username).exists():
-            return JsonResponse({'status': 'error', 'message': 'User already exists'})
-        
-        # Create superuser
-        admin_user = User.objects.create_superuser(
-            username=username,
-            email=email,
-            password=password
-        )
-        
-        return JsonResponse({
-            'status': 'success', 
-            'message': f'Admin user {username} created successfully!',
-            'username': username,
-            'password': password
-        })
-    
-    return render(request, 'create_admin.html')
