@@ -33,4 +33,5 @@ urlpatterns = [
     path('appointments/', include('appointments.urls')),
     path('payments/', include('payments.urls')),
     path('communications/', include('communications.urls')),
+    path('create-admin/', user_views.create_admin_user, name='create_admin'),
 ]
