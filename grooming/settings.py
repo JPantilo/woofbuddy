@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'appointments.apps.AppointmentsConfig',
     'payments.apps.PaymentsConfig',
+    'communications.apps.CommunicationsConfig',
 ]
 
 MIDDLEWARE = [
@@ -78,9 +79,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# PayPal Configuration
 PAYPAL_MODE = os.environ.get('PAYPAL_MODE', 'sandbox')
-PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_CLIENT_ID', 'YOUR_SANDBOX_CLIENT_ID')
-PAYPAL_CLIENT_SECRET = os.environ.get('PAYPAL_CLIENT_SECRET', 'YOUR_SANDBOX_CLIENT_SECRET')
+PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_CLIENT_ID', 'AY7mFMLsEaWYxtXDFsdB2V9RgQWzXLnKoWguilGlKjaSEyYgpHc4WOBnhHNolC_LW0UTAkQKTT2LRNU4')
+PAYPAL_CLIENT_SECRET = os.environ.get('PAYPAL_CLIENT_SECRET', 'EHmZAY2axRgeBmnD5d19DmK2Mp93aEK4zf_txpLxukFLsIkeSZdj1JwgPy4wgtSb2hLy6dJTYAtoDSpS')
 PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_EMAIL', 'sb-xxxxxx@business.example.com')
 PAYPAL_RETURN_URL = os.environ.get('PAYPAL_RETURN_URL', 'http://127.0.0.1:8000/payments/paypal/return/')
 PAYPAL_CANCEL_URL = os.environ.get('PAYPAL_CANCEL_URL', 'http://127.0.0.1:8000/payments/paypal/cancel/')
